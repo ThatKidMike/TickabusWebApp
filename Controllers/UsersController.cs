@@ -23,7 +23,7 @@ namespace TickabusWebApp.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(Guid id)
         {
-            var user = _userService.GetUser(id);
+            var user = await _userService.GetUser(id);
 
             return new JsonResult(user);
         }
