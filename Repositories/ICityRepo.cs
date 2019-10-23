@@ -11,7 +11,7 @@ namespace TickabusWebApp.Repositories
 
         Task<IEnumerable<City>> GetCities();
 
-        Task<City> GetCity(Guid id);
+        Task<City> GetCity(Guid? id);
 
         Task<City> AddCity(City city);
 

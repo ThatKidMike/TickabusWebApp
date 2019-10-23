@@ -40,7 +40,7 @@ namespace TickabusWebApp.Repositories
             return cities;
         }
 
-        public async Task<City> GetCity(Guid id)
+        public async Task<City> GetCity(Guid? id)
         {
             var city = await _context.Cities.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
 

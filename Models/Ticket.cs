@@ -9,6 +9,8 @@ namespace TickabusWebApp.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public int Price { get; set; }
+        public string StartingCity { get; set; }
+        public string DestinationCity { get; set; }
 
         public Guid TrackId { get; set; }
         public virtual Track Track { get; set; }

@@ -31,5 +31,14 @@ namespace TickabusWebApp.Repositories
 
             return tickets;
         }
+
+        public async Task<Ticket> CreateTicket(Ticket createdTicket)
+        {
+            await _context.Tickets.AddAsync(createdTicket);
+            await _context.SaveChangesAsync();
+
+            return createdTicket;
+        }
+
     }
 }

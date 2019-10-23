@@ -9,6 +9,8 @@ namespace TickabusWebApp.DTOs
     {
         public Guid Id { get; set; }
         public int Price { get; set; }
+        public string StartingCity { get; set; }
+        public string DestinationCity { get; set; }
 
     }
 }
