@@ -44,7 +44,7 @@ namespace TickabusWebApp.Controllers
         public async Task<IActionResult> AddCity(CityDTO addedCity)
         {
 
-            if (await _cityService.CityExists(addedCity.Name))
+            if (!(await _cityService.CityExists(addedCity.Name) is null))
                 return BadRequest("City exists");
 
             var cityToAdd = new City
@@ -55,6 +55,17 @@ namespace TickabusWebApp.Controllers
             var freshlyAddedCity = await _cityService.AddCity(cityToAdd);
 
             return new JsonResult(freshlyAddedCity);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCity(Guid id)
+        {
+            bool isSaved = await _cityService.DeleteCity(id);
+
+            if (isSaved)
+                return Ok("City succesfully deleted");
+
+            return BadRequest("Deletion failed");
         }
 
 

@@ -11,6 +11,7 @@ namespace TickabusWebApp.Services
     {
 
         Task<TicketDTO> GetTicket(Guid id);
+        Task<IEnumerable<TicketDTO>> GetUserTickets(Guid id);
         Task<IEnumerable<TicketDTO>> GetTickets(TicketParams _filters);
         Task<TicketDTO> CreateTicket(Guid trackId, Guid UserId);
 

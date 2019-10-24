@@ -21,31 +21,36 @@ namespace TickabusWebApp.Repositories
         {
             await _context.Cities.AddAsync(city);
             await _context.SaveChangesAsync();
-
             return city;
         }
 
-        public async Task<bool> CityExists(string name)
+        public async Task<City> CityExists(string name)
         {
-            if (await _context.Cities.Where(x => x.Name.Equals(name)).FirstOrDefaultAsync() is null)
-                return false;
-
-            return true;
+            var city = await _context.Cities.Where(x => x.Name.Equals(name)).FirstOrDefaultAsync();
+            return city;
         }
 
         public async Task<IEnumerable<City>> GetCities()
         {
             var cities = await _context.Cities.ToListAsync();
-
             return cities;
         }
 
         public async Task<City> GetCity(Guid? id)
         {
             var city = await _context.Cities.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
-
             return city;
+        }
 
+        public async Task<bool> DeleteCity(Guid id)
+        {
+            _context.Remove(await _context.Cities.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync());
+            int isSaved = await _context.SaveChangesAsync();
+
+            if (isSaved > 0)
+                return true;
+
+            return false;
         }
     }
 }

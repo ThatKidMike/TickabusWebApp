@@ -24,6 +24,14 @@ namespace TickabusWebApp.Controllers
             _ticketService = ticketService;
         }
 
+        [HttpGet("{id}"), Route("usertickets")]
+        public async Task<IActionResult> GetUserTickets(Guid userId)
+        {
+            var tickets = await _ticketService.GetUserTickets(userId);
+
+            return new JsonResult(tickets);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTicket(Guid id)
         {

@@ -26,12 +26,11 @@ namespace TickabusWebApp.Services
             return _mapper.Map<CityDTO>(city);
         }
 
-        public async Task<bool> CityExists(string name)
+        public async Task<City> CityExists(string name)
         {
-            if (!await _cityRepo.CityExists(name))
-                return false;
-
-            return true;
+            var city = await _cityRepo.CityExists(name);
+                
+            return city;
         }
 
         public async Task<IEnumerable<CityDTO>> GetCities()
@@ -45,5 +44,12 @@ namespace TickabusWebApp.Services
             var city = await _cityRepo.GetCity(id);
             return _mapper.Map<CityDTO>(city);
         }
+
+        public async Task<bool> DeleteCity(Guid id)
+        {
+            bool deleted = await _cityRepo.DeleteTrack(id);
+            return deleted;
+        }
+
     }
 }

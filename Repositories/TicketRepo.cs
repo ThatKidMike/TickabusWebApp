@@ -24,6 +24,13 @@ namespace TickabusWebApp.Repositories
             return ticket;
         }
 
+        public async Task<IEnumerable<Ticket>> GetUserTickets(Guid id)
+        {
+            var tickets = await _context.Tickets.Where(x => x.UserId.Equals(id)).ToListAsync();
+
+            return tickets;
+        }
+
         public async Task<IEnumerable<Ticket>> GetTickets(Guid startCityId, Guid destinationCityId)
         {
             var tickets = await _context.Tickets.Where(x => x.Track.StartingCityId.Equals(startCityId) 
@@ -39,6 +46,5 @@ namespace TickabusWebApp.Repositories
 
             return createdTicket;
         }
-
     }
 }

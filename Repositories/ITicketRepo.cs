@@ -10,6 +10,7 @@ namespace TickabusWebApp.Repositories
     {
 
         Task<Ticket> GetTicket(Guid id);
+        Task<IEnumerable<Ticket>> GetUserTickets(Guid id);
         Task<IEnumerable<Ticket>> GetTickets(Guid startCityId, Guid destinationCityId);
         Task<Ticket> CreateTicket(Ticket createdTicket);
 

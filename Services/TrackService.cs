@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TickabusWebApp.DTOs;
+using TickabusWebApp.Models;
 using TickabusWebApp.Repositories;
 using TickabusWebApp.RequestBody;
 
@@ -20,6 +21,18 @@ namespace TickabusWebApp.Services
             _mapper = mapper;
         }
 
+        public async Task<TrackDTO> AddTrack(Track addedTrack)
+        {
+            var track = await _trackRepo.AddTrack(addedTrack);
+            return _mapper.Map<TrackDTO>(track);
+        }
+
+        public async Task<bool> DeleteTrack(Guid id)
+        {
+            bool deleted = await _trackRepo.DeleteTrack(id);
+            return deleted;
+        }
+
         public async Task<TrackDTO> GetTrack(Guid id)
         {
             var track = await _trackRepo.GetTrack(id);
@@ -32,5 +45,10 @@ namespace TickabusWebApp.Services
                 return _mapper.Map<IEnumerable<TrackDTO>>(tracks);
         }
 
+        public async Task<IEnumerable<TrackDTO>> GetTracks()
+        {
+            var tracks = await _trackRepo.GetTracks();
+            return _mapper.Map<IEnumerable<TrackDTO>>(tracks);
+        }
     }
 }

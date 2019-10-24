@@ -9,8 +9,12 @@ namespace TickabusWebApp.Repositories
     public interface ITrackRepo
     {
         Task<Track> GetTrack(Guid id);
-
         Task<IEnumerable<Track>> GetTracks(Guid startingCityId, Guid destinationCityId, DateTime date);
+        Task<IEnumerable<Track>> GetTracks();
+        Task<Track> AddTrack(Track track);
+        Task<bool> DeleteTrack(Guid id);
+
+
 
     }
 }

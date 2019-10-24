@@ -29,10 +29,14 @@ namespace TickabusWebApp.Services
 
         public async Task<TicketDTO> GetTicket(Guid id)
         {
-            //odniesienie do repo
             var ticket = await _ticketRepo.GetTicket(id);
             return _mapper.Map<TicketDTO>(ticket);
+        }
 
+        public async Task<IEnumerable<TicketDTO>> GetUserTickets(Guid id)
+        {
+            var tickets = await _ticketRepo.GetUserTickets(id);
+            return _mapper.Map<IEnumerable<TicketDTO>>(tickets);
         }
 
         public async Task<IEnumerable<TicketDTO>> GetTickets(TicketParams _filters)

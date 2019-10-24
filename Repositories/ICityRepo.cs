@@ -8,14 +8,11 @@ namespace TickabusWebApp.Repositories
 {
     public interface ICityRepo
     {
-
         Task<IEnumerable<City>> GetCities();
-
         Task<City> GetCity(Guid? id);
-
         Task<City> AddCity(City city);
-
-        Task<bool> CityExists(string name);
+        Task<City> CityExists(string name);
+        Task<bool> DeleteCity(Guid id);
 
     }
 }
