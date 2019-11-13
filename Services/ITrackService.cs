@@ -16,6 +16,7 @@ namespace TickabusWebApp.Services
         Task<IEnumerable<TrackDTO>> GetTracks();
         Task<TrackDTO> AddTrack(Track track);
         Task <bool> DeleteTrack(Guid id);
+        Task<TrackDTO> ModifyTrack(TrackToModifyDTO values);
 
     }
 }

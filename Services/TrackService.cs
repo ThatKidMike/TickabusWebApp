@@ -50,5 +50,11 @@ namespace TickabusWebApp.Services
             var tracks = await _trackRepo.GetTracks();
             return _mapper.Map<IEnumerable<TrackDTO>>(tracks);
         }
+
+        public async Task<TrackDTO> ModifyTrack(TrackToModifyDTO values)
+        {
+            var modifiedTrack = await _trackRepo.ModifyTrack(values);
+            return _mapper.Map<TrackDTO>(modifiedTrack);
+        }
     }
 }

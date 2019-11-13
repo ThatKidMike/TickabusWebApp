@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TickabusWebApp.DTOs;
 using TickabusWebApp.Models;
 
 namespace TickabusWebApp.Repositories
@@ -13,6 +14,7 @@ namespace TickabusWebApp.Repositories
         Task<IEnumerable<Track>> GetTracks();
         Task<Track> AddTrack(Track track);
         Task<bool> DeleteTrack(Guid id);
+        Task<Track> ModifyTrack(TrackToModifyDTO values);
 
 
 

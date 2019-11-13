@@ -47,7 +47,7 @@ namespace TickabusWebApp.Services
 
         public async Task<bool> DeleteCity(Guid id)
         {
-            bool deleted = await _cityRepo.DeleteTrack(id);
+            bool deleted = await _cityRepo.DeleteCity(id);
             return deleted;
         }
 

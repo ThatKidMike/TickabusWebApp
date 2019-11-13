@@ -12,7 +12,7 @@ using TickabusWebApp.Services;
 
 namespace TickabusWebApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("[controller]")]
     [ApiController]
     public class TracksController : ControllerBase
@@ -51,6 +51,13 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(freshlyAddedTrack);
         }
 
+        [HttpPost("modifytrack")]
+        public async Task<IActionResult> ModifyTrack([FromQuery] TrackToModifyDTO values)
+        {
+            var modifiedTrack = await _trackService.ModifyTrack(values);
+            return new JsonResult(modifiedTrack);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTrack(Guid id)
         {
@@ -70,7 +77,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(tracks);
         }
 
-        [HttpGet]
+        [HttpGet("noparams")]
         public async Task<IActionResult> GetTracks()
         {
             var tracks = await _trackService.GetTracks();

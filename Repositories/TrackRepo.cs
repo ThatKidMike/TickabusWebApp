@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TickabusWebApp.Database;
+using TickabusWebApp.DTOs;
 using TickabusWebApp.Models;
 
 namespace TickabusWebApp.Repositories
@@ -59,5 +60,15 @@ namespace TickabusWebApp.Repositories
             return tracks;
         }
 
+        public async Task<Track> ModifyTrack(TrackToModifyDTO values)
+        {
+            Track track = await _context.Tracks.Where(x => x.Id.Equals(values.Id)).FirstOrDefaultAsync();
+            track.StartingCityId = values.StartingCityId;
+            track.DestinationCityId = values.DestinationCityId;
+            track.Date = values.Date;
+            track.Distance = values.Distance;
+            await _context.SaveChangesAsync();
+            return track;
+        }
     }
 }
