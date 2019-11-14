@@ -75,5 +75,10 @@ namespace TickabusWebApp.Services
         {
              return await _authRepo.UserExists(username);
         }
+
+        public async Task<bool> EmailExists(string email)
+        {
+            return await _authRepo.EmailExists(email);
+        }
     }
 }

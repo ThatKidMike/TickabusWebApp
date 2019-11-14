@@ -37,6 +37,8 @@ namespace TickabusWebApp.Controllers
 
             if (await _authService.UserExists(registeredUser.Username))
                 return BadRequest("Username already exists");
+            else if (await _authService.EmailExists(registeredUser.Email))
+                return BadRequest("Submitted email already exists");
 
             var userToCreate = new User
             {

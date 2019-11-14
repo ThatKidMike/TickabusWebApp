@@ -11,5 +11,6 @@ namespace TickabusWebApp.Repositories
         Task<User> Login(string username, string password);
         Task<User> Register(User user);
         Task<bool> UserExists(string username);
+        Task<bool> EmailExists(string email);
     }
 }
