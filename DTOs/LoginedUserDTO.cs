@@ -14,5 +14,6 @@ namespace TickabusWebApp.DTOs
         [Required(ErrorMessage = "A password must be provided")]
         [StringLength(21, MinimumLength = 8, ErrorMessage = "Password must consists of at least 8 characters (21 max)")]
         public string Password { get; set; }
+
     }
 }
