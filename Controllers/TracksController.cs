@@ -69,6 +69,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(track);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetTracks([FromQuery] TrackParams _filters)
         {
@@ -77,6 +78,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(tracks);
         }
 
+        [AllowAnonymous]
         [HttpGet("noparams")]
         public async Task<IActionResult> GetTracks()
         {

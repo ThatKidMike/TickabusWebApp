@@ -48,9 +48,10 @@ namespace TickabusWebApp.Repositories
         {
             var tracks = await _context.Tracks.Where(x => x.StartingCityId.Equals(startingCityId)
                                                     && x.DestinationCityId.Equals(destinationCityId)
-                                                    && x.Date.Hour.CompareTo(date.Hour) >= 0 
-                                                    && x.Date.Minute.CompareTo(date.Minute) >= 0
-                                                    && x.Date.Date.CompareTo(date.Date) == 0).ToListAsync();
+                                                    && x.Date.CompareTo(date) >= 0
+                                                    && x.Date.Day.CompareTo(date.Day) == 0
+                                                    && x.Date.Month.CompareTo(date.Month) == 0
+                                                    && x.Date.Year.CompareTo(date.Year) == 0).ToListAsync();
             return tracks;
         }
 

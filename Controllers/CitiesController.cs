@@ -32,6 +32,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(city);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCities()
         {
