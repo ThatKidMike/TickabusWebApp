@@ -32,7 +32,6 @@ namespace TickabusWebApp.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisteredUserDTO registeredUser)
         {
-
             registeredUser.Username = registeredUser.Username.ToLower();
 
             if (await _authService.UserExists(registeredUser.Username))
