@@ -57,7 +57,8 @@ namespace TickabusWebApp.Services
                 StartingCity = startingCity.Name,
                 DestinationCity = destinationCity.Name,
                 TrackId = trackId,
-                UserId = userId
+                UserId = userId,
+                Date = track.Date
             };
 
             var ticket = await _ticketRepo.CreateTicket(createdTicket);

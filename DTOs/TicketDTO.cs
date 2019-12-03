@@ -11,6 +11,7 @@ namespace TickabusWebApp.DTOs
         public int Price { get; set; }
         public string StartingCity { get; set; }
         public string DestinationCity { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }
