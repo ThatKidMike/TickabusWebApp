@@ -71,6 +71,8 @@ namespace TickabusWebApp
                         ValidateAudience = false
                     };
                 });
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +101,6 @@ namespace TickabusWebApp
             }
 
             app.UseRouting();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();
             app.UseAuthorization();
 

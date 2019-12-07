@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TickabusWebApp.Helpers;
 using TickabusWebApp.RequestBody;
 using TickabusWebApp.Services;
 
 namespace TickabusWebApp.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class TicketsController : ControllerBase
@@ -24,9 +24,12 @@ namespace TickabusWebApp.Controllers
             _ticketService = ticketService;
         }
 
-        [HttpGet("{id}"), Route("usertickets")]
+        [HttpGet, Route("usertickets")]
         public async Task<IActionResult> GetUserTickets(Guid userId)
         {
+            if (userId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
             var tickets = await _ticketService.GetUserTickets(userId);
 
             return new JsonResult(tickets);
@@ -49,10 +52,14 @@ namespace TickabusWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTicket(Guid trackId)
+        public async Task<IActionResult> CreateTicket(TicketBody ticketBody)
         {
-            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var ticket = await _ticketService.CreateTicket(trackId, userId);
+            //var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (ticketBody.CurrentUserId != Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var ticket = await _ticketService.CreateTicket(ticketBody.Id, ticketBody.CurrentUserId);
 
             return new JsonResult(ticket);
 
