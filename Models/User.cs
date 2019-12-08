@@ -14,6 +14,7 @@ namespace TickabusWebApp.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public string role { get; set; } = "user";
 
         public virtual ICollection<Ticket> Tickets { get; set; }
 

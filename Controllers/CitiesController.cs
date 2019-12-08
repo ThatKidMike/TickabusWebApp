@@ -32,7 +32,6 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(city);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCities()
         {
@@ -41,6 +40,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(cities);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("addcity")]
         public async Task<IActionResult> AddCity(CityDTO addedCity)
         {
@@ -58,6 +58,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(freshlyAddedCity);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteCity(Guid id)
         {

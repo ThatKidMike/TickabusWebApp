@@ -60,10 +60,13 @@ namespace TickabusWebApp.Controllers
             if (userToLogin is null)
                 return Unauthorized();
 
+            var userRole = await _authService.UserRole(userToLogin.Id);
+
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, userToLogin.Id.ToString()),
-                new Claim(ClaimTypes.Name, userToLogin.Username)
+                new Claim(ClaimTypes.Name, userToLogin.Username),
+                new Claim(ClaimTypes.Role, userRole)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));

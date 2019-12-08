@@ -80,5 +80,10 @@ namespace TickabusWebApp.Services
         {
             return await _authRepo.EmailExists(email);
         }
+
+        public async Task<string> UserRole(Guid id)
+        {
+            return await _authRepo.UserRole(id);
+        }
     }
 }

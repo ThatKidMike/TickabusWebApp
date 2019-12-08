@@ -50,5 +50,13 @@ namespace TickabusWebApp.Repositories
 
             return false;
         }
+
+        public async Task<string> UserRole(Guid id)
+        {
+            var userRole = await _context.Users.Where(x => x.Id == id).Select(x => x.role).FirstOrDefaultAsync();
+
+            return userRole;
+
+        }
     }
 }

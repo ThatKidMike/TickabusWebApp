@@ -12,6 +12,7 @@ using TickabusWebApp.Services;
 
 namespace TickabusWebApp.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class TicketsController : ControllerBase

@@ -13,5 +13,6 @@ namespace TickabusWebApp.Services
         Task<UserDTO> Register(User user, string password);
         Task<bool> UserExists(string username);
         Task<bool> EmailExists(string email);
+        Task<string> UserRole(Guid id);
     }
 }

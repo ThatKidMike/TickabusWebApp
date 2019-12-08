@@ -51,7 +51,8 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(freshlyAddedTrack);
         }
 
-        [HttpPost("modifytrack")]
+        [Authorize(Roles = "admin")]
+        [HttpPut("modifytrack")]
         public async Task<IActionResult> ModifyTrack([FromQuery] TrackToModifyDTO values)
         {
             var modifiedTrack = await _trackService.ModifyTrack(values);
@@ -69,7 +70,6 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(track);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetTracks([FromQuery] TrackParams _filters)
         {
@@ -78,7 +78,6 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(tracks);
         }
 
-        [AllowAnonymous]
         [HttpGet("noparams")]
         public async Task<IActionResult> GetTracks()
         {
@@ -87,6 +86,7 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(tracks);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteTrack(Guid id)
         {
