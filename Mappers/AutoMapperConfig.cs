@@ -17,6 +17,11 @@ namespace TickabusWebApp.Mappers
                 cfg.CreateMap<City, CityDTO>();
                 cfg.CreateMap<Track, TrackDTO>();
                 cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<CityModifiedDTO, City>();
+                cfg.CreateMap<TrackAddDTO, Track>();
+                cfg.CreateMap<Track, TrackAdminViewDTO>();
+                cfg.CreateMap<TrackAdminViewDTO, Track>();
+                cfg.CreateMap<TrackToModifyDTO, Track>();
             })
             .CreateMapper();
     }

@@ -39,6 +39,12 @@ namespace TickabusWebApp.Services
             return _mapper.Map<TrackDTO>(track);
         }
 
+        public async Task<IEnumerable<TrackAdminViewDTO>> GetAdminTracks()
+        {
+            var track = await _trackRepo.GetTracks();
+            return _mapper.Map<IEnumerable<TrackAdminViewDTO>>(track);
+        }
+
         public async Task<IEnumerable<TrackDTO>> GetTracks(TrackParams _filters)
         {
                 var tracks = await _trackRepo.GetTracks(_filters.StartingCityId, _filters.DestinationCityId, _filters.Date);
@@ -51,10 +57,18 @@ namespace TickabusWebApp.Services
             return _mapper.Map<IEnumerable<TrackDTO>>(tracks);
         }
 
-        public async Task<TrackDTO> ModifyTrack(TrackToModifyDTO values)
+        public async Task<TrackDTO> ModifyTrack(TrackToModifyDTO modifiedTrack, Guid id)
         {
-            var modifiedTrack = await _trackRepo.ModifyTrack(values);
-            return _mapper.Map<TrackDTO>(modifiedTrack);
+            var oldTrack = await _trackRepo.GetTrack(id);
+            _mapper.Map(modifiedTrack, oldTrack);
+            await _trackRepo.ModifyTrack(oldTrack);
+            return _mapper.Map<TrackDTO>(oldTrack);
+        }
+
+        public async Task<bool> IsCityInTracks(Guid id)
+        {
+            bool isInTracks = await _trackRepo.IsCityInTracks(id);
+            return isInTracks;
         }
     }
 }

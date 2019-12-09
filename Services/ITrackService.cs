@@ -15,8 +15,10 @@ namespace TickabusWebApp.Services
         Task<IEnumerable<TrackDTO>> GetTracks(TrackParams _filters);
         Task<IEnumerable<TrackDTO>> GetTracks();
         Task<TrackDTO> AddTrack(Track track);
-        Task <bool> DeleteTrack(Guid id);
-        Task<TrackDTO> ModifyTrack(TrackToModifyDTO values);
+        Task<bool> DeleteTrack(Guid id);
+        Task<TrackDTO> ModifyTrack(TrackToModifyDTO modifiedTrack, Guid id);
+        Task<bool> IsCityInTracks(Guid id);
+        Task<IEnumerable<TrackAdminViewDTO>> GetAdminTracks();
 
     }
 }

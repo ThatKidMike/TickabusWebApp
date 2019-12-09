@@ -14,7 +14,8 @@ namespace TickabusWebApp.Repositories
         Task<IEnumerable<Track>> GetTracks();
         Task<Track> AddTrack(Track track);
         Task<bool> DeleteTrack(Guid id);
-        Task<Track> ModifyTrack(TrackToModifyDTO values);
+        Task<Track> ModifyTrack(Track modifiedTrack);
+        Task<bool> IsCityInTracks(Guid id);
 
 
 

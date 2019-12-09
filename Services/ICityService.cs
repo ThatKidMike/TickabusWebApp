@@ -14,6 +14,6 @@ namespace TickabusWebApp.Services
         Task<CityDTO> AddCity(City city);
         Task<City> CityExists(string name);
         Task<bool> DeleteCity(Guid id);
-
+        Task<CityDTO> ModifyCity(CityModifiedDTO modifiedCity, Guid id);
     }
 }

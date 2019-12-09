@@ -13,10 +13,12 @@ namespace TickabusWebApp.Services
     {
         private readonly ICityRepo _cityRepo;
         private readonly IMapper _mapper;
+        private readonly ITrackService _trackService;
 
-        public CityService(ICityRepo cityRepo, IMapper mapper)
+        public CityService(ICityRepo cityRepo, IMapper mapper, ITrackService trackService)
         {
             _cityRepo = cityRepo;
+            _trackService = trackService;
             _mapper = mapper;
         }
 
@@ -47,9 +49,23 @@ namespace TickabusWebApp.Services
 
         public async Task<bool> DeleteCity(Guid id)
         {
-            bool deleted = await _cityRepo.DeleteCity(id);
-            return deleted;
+            bool isInTracks = await _trackService.IsCityInTracks(id);
+
+            if (isInTracks)
+                return true;
+            else
+            {
+                await _cityRepo.DeleteCity(id);
+                return false;
+            }
         }
 
+        public async Task<CityDTO> ModifyCity(CityModifiedDTO modifiedCity, Guid id)
+        {
+            var oldCity = await _cityRepo.GetCity(id);
+            _mapper.Map(modifiedCity, oldCity);
+            await _cityRepo.ModifyCity(oldCity);
+            return _mapper.Map<CityDTO>(oldCity);
+        }
     }
 }

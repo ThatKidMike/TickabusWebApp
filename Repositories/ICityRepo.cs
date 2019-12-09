@@ -13,6 +13,7 @@ namespace TickabusWebApp.Repositories
         Task<City> AddCity(City city);
         Task<City> CityExists(string name);
         Task<bool> DeleteCity(Guid id);
+        Task<City> ModifyCity(City modifiedCity);
 
     }
 }

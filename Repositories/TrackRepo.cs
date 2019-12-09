@@ -61,15 +61,18 @@ namespace TickabusWebApp.Repositories
             return tracks;
         }
 
-        public async Task<Track> ModifyTrack(TrackToModifyDTO values)
+        public async Task<Track> ModifyTrack(Track modifiedTrack)
         {
-            Track track = await _context.Tracks.Where(x => x.Id.Equals(values.Id)).FirstOrDefaultAsync();
-            track.StartingCityId = values.StartingCityId;
-            track.DestinationCityId = values.DestinationCityId;
-            track.Date = values.Date;
-            track.Distance = values.Distance;
+            _context.Update(modifiedTrack);
             await _context.SaveChangesAsync();
-            return track;
+            return modifiedTrack;
+        }
+
+        public async Task<bool> IsCityInTracks(Guid id)
+        {
+            bool isInTracks = await _context.Tracks.Where(x => x.StartingCityId.Equals(id) || x.DestinationCityId.Equals(id)).AnyAsync();
+
+            return isInTracks;
         }
     }
 }

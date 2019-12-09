@@ -25,9 +25,9 @@ namespace TickabusWebApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCity(Guid id)
+        public async Task<IActionResult> GetCity(string id)
         {
-            var city = await _cityService.GetCity(id);
+            var city = await _cityService.GetCity(Guid.Parse(id));
 
             return new JsonResult(city);
         }
@@ -59,15 +59,30 @@ namespace TickabusWebApp.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(Guid id)
         {
-            bool isSaved = await _cityService.DeleteCity(id);
+            bool isInTracks = await _cityService.DeleteCity(id);
 
-            if (isSaved)
-                return Ok("City succesfully deleted");
+            if (!isInTracks)
+                return NoContent();
 
-            return BadRequest("Deletion failed");
+            return BadRequest("Deletion failed - city is probably embbeded in tracks");
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ModifyCity(CityModifiedDTO modifiedCity, Guid id)
+        {
+            var oldCity = await _cityService.GetCity(id);
+
+            if (oldCity is null)
+                return BadRequest("Something went wrong with gathering city");
+
+            var freshlyModifiedCity = await _cityService.ModifyCity(modifiedCity, id);
+
+            return new JsonResult(freshlyModifiedCity);
+
         }
 
 

@@ -52,5 +52,12 @@ namespace TickabusWebApp.Repositories
 
             return false;
         }
+
+        public async Task<City> ModifyCity(City modifiedCity)
+        {
+            _context.Update(modifiedCity);
+            await _context.SaveChangesAsync();
+            return modifiedCity;
+        }
     }
 }

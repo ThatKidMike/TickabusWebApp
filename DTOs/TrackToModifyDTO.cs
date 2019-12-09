@@ -7,9 +7,11 @@ namespace TickabusWebApp.DTOs
 {
     public class TrackToModifyDTO
     {
-        public Guid Id { get; set; }
-        public DateTime Date { get; set; }
+        public string FakeDate { get; set; }
         public int Distance { get; set; }
+        public string FakeStartingCityId { get; set; }
+        public string FakeDestinationCityId { get; set; }
+        public DateTime Date { get; set; }
         public Guid StartingCityId { get; set; }
         public Guid DestinationCityId { get; set; }
 

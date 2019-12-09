@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace TickabusWebApp.DTOs
 {
-    public class TrackAddDTO
+    public class TrackAdminViewDTO
     {
-        public string Date { get; set; }
+        public Guid Id { get; set; }
+        public DateTime Date { get; set; }
         public Guid StartingCityId { get; set; }
         public Guid DestinationCityId { get; set; }
         public int Distance { get; set; }
-
     }
 }

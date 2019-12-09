@@ -26,23 +26,15 @@ namespace TickabusWebApp.Controllers
             _cityService = cityService;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("addtrack")]
-        public async Task<IActionResult> AddTrack([FromQuery] TrackAddDTO trackToAdd)
+        public async Task<IActionResult> AddTrack(TrackAddDTO trackToAdd)
         {
-            var startingCity = await _cityService.CityExists(trackToAdd.StartingCity);
-            var destinationCity = await _cityService.CityExists(trackToAdd.DestinationCity);
-
-            if (startingCity is null)
-                return BadRequest("Starting city doesn't exist");
-
-            if (destinationCity is null)
-                return BadRequest("Destination city doesn't exist");
-
             var track = new Track
             {
-                Date = trackToAdd.Date,
-                StartingCityId = startingCity.Id,
-                DestinationCityId = destinationCity.Id,
+                Date = DateTime.ParseExact(trackToAdd.Date, "yyyy-MM-dd HH:mm", null),
+                StartingCityId = trackToAdd.StartingCityId,
+                DestinationCityId = trackToAdd.DestinationCityId,
                 Distance = trackToAdd.Distance
             };
 
@@ -52,11 +44,21 @@ namespace TickabusWebApp.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPut("modifytrack")]
-        public async Task<IActionResult> ModifyTrack([FromQuery] TrackToModifyDTO values)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ModifyTrack(TrackToModifyDTO modifiedTrack, Guid id)
         {
-            var modifiedTrack = await _trackService.ModifyTrack(values);
-            return new JsonResult(modifiedTrack);
+            var oldTrack = _trackService.GetTrack(id);
+
+            if (oldTrack is null)
+                return BadRequest("Something went wrong with gathering track");
+
+            modifiedTrack.Date = DateTime.ParseExact(modifiedTrack.FakeDate, "yyyy-MM-dd HH:mm", null);
+            modifiedTrack.StartingCityId = Guid.Parse(modifiedTrack.FakeStartingCityId);
+            modifiedTrack.DestinationCityId = Guid.Parse(modifiedTrack.FakeDestinationCityId);
+
+            var freshlyModifiedTrack = await _trackService.ModifyTrack(modifiedTrack, id);
+
+            return new JsonResult(freshlyModifiedTrack);
         }
 
         [HttpGet("{id}")]
@@ -78,22 +80,23 @@ namespace TickabusWebApp.Controllers
             return new JsonResult(tracks);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("noparams")]
         public async Task<IActionResult> GetTracks()
         {
-            var tracks = await _trackService.GetTracks();
+            var tracks = await _trackService.GetAdminTracks();
 
             return new JsonResult(tracks);
         }
 
         [Authorize(Roles = "admin")]
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrack(Guid id)
         {
             bool isSaved = await _trackService.DeleteTrack(id);
 
             if (isSaved)
-            return Ok("Track succesfully deleted");
+                return NoContent();
 
             return BadRequest("Deletion failed");
         }
